@@ -15,16 +15,16 @@ import (
 
 func Main() int {
 	slog.Debug("belowcan", "test", true)
-	run()
+	GenerateEd25519Keys()
 
 	return 0
 }
 
-func run() {
+func GenerateEd25519Keys() {
 	privKeyPath := "id_ed25519"
 	pubKeyPath := fmt.Sprintf("%s.pub", privKeyPath)
 
-	privString, pubString, err := GenEd25519Pair()
+	privString, pubString, err := GenEd25519KeyPair()
 	if err != nil {
 		panic(err)
 	}
@@ -43,6 +43,21 @@ func run() {
 	}
 }
 
+func GenerateAndPersistEd25519Keys() (string, string, error) {
+	privKeyPath := "id_ed25519"
+	pubKeyPath := fmt.Sprintf("%s.pub", privKeyPath)
+
+	privString, pubString, err := GenEd25519KeyPair()
+	if err != nil {
+		return "", "", err
+	}
+
+	saveToPath(privString, privKeyPath)
+	saveToPath(pubString, pubKeyPath)
+
+	return privString, pubString, nil
+}
+
 func saveToPath(content, path string) error {
 	file, err := os.Create(path)
 	if err != nil {
@@ -58,7 +73,7 @@ func saveToPath(content, path string) error {
 	return nil
 }
 
-func GenEd25519Pair() (string, string, error) {
+func GenEd25519KeyPair() (string, string, error) {
 	pub, priv, err := ed25519.GenerateKey(rand.Reader)
 	if err != nil {
 		return "", "", err
