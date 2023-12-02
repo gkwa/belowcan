@@ -20,6 +20,7 @@ $(BIN): $(GO_FILES) $(GO_DEPS)
 .PHONY: test
 test: $(BIN)
 	./$(BIN) --verbose
+	go test
 
 .PHONY: pretty
 pretty: $(GO_FILES)
