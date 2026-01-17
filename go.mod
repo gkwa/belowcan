@@ -2,7 +2,7 @@ module github.com/taylormonacelli/belowcan
 
 go 1.24.0
 
-toolchain go1.25.5
+toolchain go1.25.6
 
 require (
 	github.com/taylormonacelli/goldbug v0.0.6
